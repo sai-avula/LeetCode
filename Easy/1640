@@ -1,0 +1,38 @@
+class Solution 
+{
+public:
+    bool canFormArray(vector<int>& arr, vector<vector<int>>& pieces) 
+    {
+        bool res = false;
+        sort(pieces.begin(), pieces.end()); // sort to calculate permutations
+        
+        int k; // set counter
+        
+        do
+        {
+            k = 0;
+            vector<int> v;
+            for(unsigned int i=0; i<pieces.size(); ++i)
+            {
+                for(unsigned int j=0; j<pieces[i].size(); ++j)
+                {
+                    v.push_back(pieces[i][j]); 
+                    // generate permuted vector. order of numbers in a piece will never change
+                    // because next_permutation handles it
+                }
+            }
+            
+            for(unsigned int i=0; i<v.size(); ++i)
+            {
+                if(arr[i] - v[i] != 0) // if permutations dont match 'at any point'
+                    k=1;               // k = 1
+            }
+            
+            if(k==0)                   // if permutations match
+                res = true;            // result = true
+            
+        } while(next_permutation(pieces.begin(), pieces.end()));
+        
+        return res;
+    }     
+};
